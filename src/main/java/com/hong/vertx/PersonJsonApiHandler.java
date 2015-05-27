@@ -1,15 +1,14 @@
 package com.hong.vertx;
 
-import java.io.IOException;
+import io.vertx.core.http.HttpServerResponse;
+import io.vertx.ext.apex.RoutingContext;
+
 import java.util.HashMap;
 import java.util.Map;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.hong.vertx.model.Person;
-
-import io.vertx.core.http.HttpServerResponse;
-import io.vertx.ext.apex.RoutingContext;
 
 public class PersonJsonApiHandler {
 
@@ -25,7 +24,7 @@ public class PersonJsonApiHandler {
 		ObjectMapper objectMapper = new ObjectMapper();
 
 		try {
-			response.putHeader("content-type", "application/json").end(objectMapper.writeValueAsString(persons.values()));
+			response.putHeader("content-type", "application/json; charset=utf-8").end(objectMapper.writeValueAsString(persons.values()));
 		} catch (JsonProcessingException e) {
 			e.printStackTrace();
 		}
