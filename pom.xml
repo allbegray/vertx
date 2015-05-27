@@ -9,7 +9,7 @@
 
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		
+
 		<io.vertx.version>3.0.0-milestone5</io.vertx.version>
 	</properties>
 
@@ -17,6 +17,12 @@
 		<dependency>
 			<groupId>io.vertx</groupId>
 			<artifactId>vertx-core</artifactId>
+			<version>${io.vertx.version}</version>
+		</dependency>
+		<!-- 아놔 -_- vertx-web 이라는 늬앙스 풍기더니 apex 라니!! -->
+		<dependency>
+			<groupId>io.vertx</groupId>
+			<artifactId>vertx-apex</artifactId>
 			<version>${io.vertx.version}</version>
 		</dependency>
 	</dependencies>

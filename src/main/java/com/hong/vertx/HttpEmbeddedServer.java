@@ -1,7 +1,5 @@
 package com.hong.vertx;
 
-import java.awt.Event;
-
 import io.vertx.core.AsyncResult;
 import io.vertx.core.Future;
 import io.vertx.core.Handler;
@@ -12,6 +10,9 @@ import io.vertx.core.http.HttpServerRequest;
 import io.vertx.core.http.HttpServerResponse;
 import io.vertx.core.logging.Logger;
 import io.vertx.core.logging.impl.LoggerFactory;
+import io.vertx.ext.apex.Route;
+import io.vertx.ext.apex.Router;
+import io.vertx.ext.apex.handler.BodyHandler;
 
 public class HttpEmbeddedServer {
 
@@ -75,8 +76,24 @@ public class HttpEmbeddedServer {
 			}
 		});
 		
+		Router router = Router.router(vertx);
+		
+		PersonJsonApiHandler personJsonApiHandler = new PersonJsonApiHandler();
+		
+		router.route().handler(BodyHandler.create());
+		router.get("/person/list").handler(personJsonApiHandler::handleGetPersons);
+		router.post("/person/add").handler(personJsonApiHandler::handleAddPerson);
 
-		httpServer.requestHandler(httpHandler).listen(8080);
+		router.get("/").handler(routingContext -> {
+
+			HttpServerResponse response = routingContext.response();
+			response.putHeader("content-type", "text/plain");
+
+			response.end("Hello World from Vert.x-Web!");
+
+		});
+
+		httpServer.requestHandler(router::accept).listen(8080);
 
 	}
 
